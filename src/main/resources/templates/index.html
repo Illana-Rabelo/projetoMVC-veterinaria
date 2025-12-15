@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Início')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<main class="container">
+    <section class="card">
+        <h2>Bem-vindo</h2>
+        <p>Este sistema implementa <strong>3 CRUDs simples</strong> com persistência usando Spring Boot, Thymeleaf e Spring Data JPA (H2).</p>
+
+        <div class="grid">
+            <a class="tile" th:href="@{/tutores}">
+                <h3>Tutores</h3>
+                <p>Cadastrar, listar, editar e excluir tutores.</p>
+            </a>
+            <a class="tile" th:href="@{/animais}">
+                <h3>Animais</h3>
+                <p>CRUD de animais com vínculo ao tutor.</p>
+            </a>
+            <a class="tile" th:href="@{/localizadores}">
+                <h3>Localizadores</h3>
+                <p>CRUD de localizadores.</p>
+            </a>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Operação mestre/detalhe</h2>
+        <p>Exemplo implementado: <strong>Venda</strong> (mestre) com <strong>itens</strong> (detalhe), vinculando <strong>Cliente</strong> e <strong>Produto</strong>, com baixa/restauração de estoque.</p>
+
+        <div class="grid">
+            <a class="tile" th:href="@{/clientes}">
+                <h3>Clientes</h3>
+                <p>CRUD de clientes (cadastro base para vendas).</p>
+            </a>
+            <a class="tile" th:href="@{/produtos}">
+                <h3>Produtos</h3>
+                <p>CRUD de produtos com campo de estoque e preço.</p>
+            </a>
+            <a class="tile" th:href="@{/vendas}">
+                <h3>Vendas</h3>
+                <p>Criar venda e gerenciar itens (mestre/detalhe).</p>
+            </a>
+            <a class="tile" th:href="@{/relatorios}">
+                <h3>Relatórios</h3>
+                <p>Consultar indicadores (Top vendidos, estoque baixo, etc.).</p>
+            </a>
+
+        </div>
+    </section>
+
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+</body>
+</html>

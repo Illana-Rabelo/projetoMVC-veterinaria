@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Localizadores')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<main class="container">
+    <div class="page-header">
+        <h2>Localizadores</h2>
+        <a class="btn primary" th:href="@{/localizadores/novo}">Novo Localizador</a>
+    </div>
+
+    <div class="card">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Endereço</th>
+                <th class="actions">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="l : ${localizadores}">
+                <td th:text="${l.id}">1</td>
+                <td th:text="${l.nome}">Nome</td>
+                <td th:text="${l.email}">email</td>
+                <td th:text="${l.telefone}">fone</td>
+                <td th:text="${l.endereco}">end</td>
+                <td class="actions">
+                    <a class="btn" th:href="@{/localizadores/editar/{id}(id=${l.id})}">Editar</a>
+                    <a class="btn danger" th:href="@{/localizadores/excluir/{id}(id=${l.id})}"
+                       onclick="return confirm('Excluir este localizador?');">Excluir</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(localizadores)}">
+                <td colspan="6" class="muted">Nenhum localizador cadastrado.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+</body>
+</html>

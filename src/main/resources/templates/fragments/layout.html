@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(pageTitle)">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${pageTitle}">Veterinária</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+<header th:fragment="navbar" class="topbar">
+    <div class="container topbar-inner">
+        <a class="brand" th:href="@{/}">Veterinária</a>
+        <nav class="nav">
+            <a th:href="@{/tutores}">Tutores</a>
+            <a th:href="@{/animais}">Animais</a>
+            <a th:href="@{/localizadores}">Localizadores</a>
+            <a th:href="@{/clientes}">Clientes</a>
+            <a th:href="@{/produtos}">Produtos</a>
+            <a th:href="@{/vendas}">Vendas</a>
+            <a th:href="@{/relatorios}">Relatórios</a>
+        </nav>
+    </div>
+</header>
+
+<footer th:fragment="footer" class="footer">
+    <div class="container footer-inner">
+        <span>Projeto MVC com Thymeleaf + JPA</span>
+    </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Relatórios')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<main class="container">
+
+    <div class="page-header">
+        <div>
+            <h2>Relatórios</h2>
+            <p class="muted">
+                Relatório baseado no CRUD mestre/detalhe <strong>(Venda/Itens)</strong> e no CRUD simples <strong>(Produto)</strong>.
+            </p>
+        </div>
+        <div class="btn-row">
+            <a class="btn" th:href="@{/}">Início</a>
+        </div>
+    </div>
+
+    <section class="card">
+        <div class="card-head">
+            <div>
+                <h3>Top 5 produtos mais vendidos</h3>
+                <p class="muted small">Soma das quantidades dos itens de venda (mestre/detalhe).</p>
+            </div>
+        </div>
+
+        <table class="table" th:if="${top5Vendidos != null and !#lists.isEmpty(top5Vendidos)}">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Produto</th>
+                <th class="actions">Qtd. vendida</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="row, stat : ${top5Vendidos}">
+                <td th:text="${stat.count}">1</td>
+                <td>
+                    <span th:text="${row.descricao}">Produto</span>
+                    <span class="badge" th:text="${'#' + row.produtoId}">#1</span>
+                </td>
+                <td class="actions">
+                    <span class="badge badge-primary" th:text="${row.quantidadeVendida}">0</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="empty" th:if="${top5Vendidos == null or #lists.isEmpty(top5Vendidos)}">
+            <p>Ainda não existem vendas com itens para gerar este relatório.</p>
+        </div>
+    </section>
+
+    <section class="card">
+        <div class="card-head">
+            <div>
+                <h3>Produtos com estoque baixo</h3>
+                <p class="muted small">Relatório baseado no CRUD simples (Produto).</p>
+            </div>
+
+            <form class="inline-form" method="get" th:action="@{/relatorios}">
+                <div class="form">
+                    <label>Mostrar estoque ≤</label>
+                    <input type="number" name="estoqueMin" min="0" th:value="${estoqueMin}" />
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Aplicar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="kpi-row">
+            <div class="kpi">
+                <div class="kpi-label">Total de produtos com estoque ≤ <span th:text="${estoqueMin}">5</span></div>
+                <div class="kpi-value" th:text="${totalAbaixoOuIgual}">0</div>
+            </div>
+            <div class="kpi">
+                <div class="kpi-label">Exibindo</div>
+                <div class="kpi-value" th:text="${#lists.size(produtosAbaixoOuIgual)}">0</div>
+            </div>
+        </div>
+
+        <table class="table" th:if="${produtosAbaixoOuIgual != null and !#lists.isEmpty(produtosAbaixoOuIgual)}">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descrição</th>
+                <th class="actions">Estoque</th>
+                <th class="actions">Preço</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${produtosAbaixoOuIgual}">
+                <td th:text="${p.id}">1</td>
+                <td th:text="${p.descricao}">Produto</td>
+                <td class="actions">
+                    <span class="badge badge-danger" th:text="${p.estoque}">0</span>
+                </td>
+                <td class="actions" th:text="${p.preco}">0</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="empty" th:if="${produtosAbaixoOuIgual == null or #lists.isEmpty(produtosAbaixoOuIgual)}">
+            <p>Nenhum produto encontrado com o filtro atual.</p>
+        </div>
+    </section>
+
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+</body>
+</html>

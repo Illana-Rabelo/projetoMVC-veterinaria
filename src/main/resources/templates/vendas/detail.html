@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Detalhe da Venda')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<main class="container">
+    <div class="page-header">
+        <div>
+            <h2>Venda #<span th:text="${venda.id}">0</span></h2>
+            <p class="muted">Operação mestre/detalhe: Venda (mestre) / Itens (detalhe) / Cliente / Produto</p>
+        </div>
+        <div class="btn-row">
+            <a class="btn" th:href="@{/vendas}">Voltar</a>
+        </div>
+    </div>
+
+    <div th:if="${sucesso}" class="flash success" th:text="${sucesso}">Sucesso</div>
+    <div th:if="${erro}" class="flash danger" th:text="${erro}">Erro</div>
+
+    <section class="card">
+        <h3>Dados da venda</h3>
+
+        <form th:action="@{'/vendas/' + ${venda.id} + '/atualizar'}" method="post" class="grid-2">
+            <div class="form">
+                <label>Data</label>
+                <input type="date" name="data" th:value="${venda.data}" required />
+            </div>
+
+            <div class="form">
+                <label>Cliente</label>
+                <select name="clienteId" required>
+                    <option th:each="c : ${clientes}"
+                            th:value="${c.id}"
+                            th:text="${c.nome}"
+                            th:selected="${venda.cliente != null and c.id == venda.cliente.id}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-actions span-2">
+                <button class="btn primary" type="submit">Atualizar</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="card">
+        <div class="page-header">
+            <h3>Itens da venda</h3>
+            <div class="muted">Total: <strong th:text="${venda.total}">0.00</strong></div>
+        </div>
+
+        <form th:action="@{'/vendas/' + ${venda.id} + '/itens/adicionar'}" method="post" class="inline-form">
+            <div class="form">
+                <label>Produto</label>
+                <select name="produtoId" required>
+                    <option value="" disabled selected>Selecione...</option>
+                    <option th:each="p : ${produtos}"
+                            th:value="${p.id}"
+                            th:text="${p.descricao + ' (R$ ' + p.preco + ') - estoque: ' + p.estoque}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form">
+                <label>Quantidade</label>
+                <input type="number" name="quantidade" min="1" value="1" required />
+            </div>
+
+            <div class="form-actions">
+                <button class="btn primary" type="submit">Adicionar</button>
+            </div>
+        </form>
+
+        <div class="card inset">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Qtd</th>
+                    <th>Unitário</th>
+                    <th>Subtotal</th>
+                    <th class="actions">Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="i : ${venda.itens}">
+                    <td th:text="${i.produto != null ? i.produto.descricao : '-'}">Produto</td>
+                    <td th:text="${i.quantidade}">1</td>
+                    <td th:text="${i.precoUnitario}">0.00</td>
+                    <td th:text="${i.subtotal}">0.00</td>
+                    <td class="actions">
+                        <a class="btn danger"
+                           th:href="@{'/vendas/' + ${venda.id} + '/itens/excluir/' + ${i.id}}"
+                           onclick="return confirm('Remover item da venda?')">Remover</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(venda.itens)}">
+                    <td colspan="5" class="muted">Nenhum item adicionado.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="muted small">
+            O estoque é baixado ao adicionar itens e restaurado ao remover itens ou excluir a venda.
+        </div>
+    </section>
+
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+</body>
+</html>

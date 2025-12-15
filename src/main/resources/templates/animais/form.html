@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Cadastro de Animal')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<main class="container">
+    <div class="page-header">
+        <h2 th:text="${animal.id == null ? 'Novo Animal' : 'Editar Animal'}">Animal</h2>
+        <a class="btn" th:href="@{/animais}">Voltar</a>
+    </div>
+
+    <form class="card form" th:action="@{/animais/salvar}" th:object="${animal}" method="post">
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-row">
+            <label>Nome</label>
+            <input type="text" th:field="*{nome}" required />
+        </div>
+
+        <div class="form-row">
+            <label>Raça</label>
+            <input type="text" th:field="*{raca}" />
+        </div>
+
+        <div class="form-row">
+            <label>Idade</label>
+            <input type="text" th:field="*{idade}" placeholder="Ex: 2 anos" />
+        </div>
+
+        <div class="form-row">
+            <label>Tutor</label>
+            <select th:field="*{tutorID.id}">
+                <option value="">-- Selecione --</option>
+                <option th:each="t : ${tutores}" th:value="${t.id}" th:text="${t.nome}"></option>
+            </select>
+            <small class="hint">Dica: cadastre um tutor antes, se necessário.</small>
+        </div>
+
+        <div class="form-row">
+            <label>Última localização</label>
+            <input type="text" th:field="*{ultimaLoc}" placeholder="Ex: Bairro Centro" />
+        </div>
+
+        <div class="form-actions">
+            <button class="btn primary" type="submit">Salvar</button>
+            <a class="btn" th:href="@{/animais}">Cancelar</a>
+        </div>
+    </form>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+</body>
+</html>

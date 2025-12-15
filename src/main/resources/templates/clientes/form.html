@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Cliente')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<main class="container">
+    <div class="page-header">
+        <h2 th:text="${cliente.id == null ? 'Novo Cliente' : 'Editar Cliente'}">Cliente</h2>
+        <a class="btn" th:href="@{/clientes}">Voltar</a>
+    </div>
+
+    <div class="card">
+        <form th:action="@{/clientes/salvar}" method="post" th:object="${cliente}">
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="form">
+                <label>Nome</label>
+                <input type="text" th:field="*{nome}" placeholder="Nome completo" required />
+            </div>
+
+            <div class="form">
+                <label>CPF</label>
+                <input type="text" th:field="*{cpf}" placeholder="000.000.000-00" />
+            </div>
+
+            <div class="form">
+                <label>Telefone</label>
+                <input type="text" th:field="*{telefone}" placeholder="(00) 00000-0000" />
+            </div>
+
+            <div class="form-actions">
+                <button class="btn primary" type="submit">Salvar</button>
+                <a class="btn" th:href="@{/clientes}">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+</body>
+</html>

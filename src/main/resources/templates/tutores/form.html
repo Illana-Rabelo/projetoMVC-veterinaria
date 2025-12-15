@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Cadastro de Tutor')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<main class="container">
+    <div class="page-header">
+        <h2 th:text="${tutor.id == null ? 'Novo Tutor' : 'Editar Tutor'}">Tutor</h2>
+        <a class="btn" th:href="@{/tutores}">Voltar</a>
+    </div>
+
+    <form class="card form" th:action="@{/tutores/salvar}" th:object="${tutor}" method="post">
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-row">
+            <label>Nome</label>
+            <input type="text" th:field="*{nome}" required />
+        </div>
+
+        <div class="form-row">
+            <label>Email</label>
+            <input type="email" th:field="*{email}" />
+        </div>
+
+        <div class="form-row">
+            <label>Telefone</label>
+            <input type="text" th:field="*{telefone}" />
+        </div>
+
+        <div class="form-row">
+            <label>Endereço</label>
+            <input type="text" th:field="*{endereco}" />
+        </div>
+
+        <div class="form-row">
+            <label>Cor</label>
+            <input type="text" th:field="*{cor}" placeholder="Ex: Azul, Vermelho..." />
+        </div>
+
+        <div class="form-row">
+            <label>Senha</label>
+            <input type="password" th:field="*{senha}" />
+        </div>
+
+        <div class="form-actions">
+            <button class="btn primary" type="submit">Salvar</button>
+            <a class="btn" th:href="@{/tutores}">Cancelar</a>
+        </div>
+    </form>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+</body>
+</html>
