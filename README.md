@@ -18,7 +18,7 @@ Notificação de Correspondência: O sistema realiza uma "leitura cruzada" das c
 Gerenciamento de Anúncios: Permite a exclusão de anúncios quando o animal for encontrado, removendo a publicação do feed.
 
     Equipe
-Caio Henrique Marins Basilio 
+Caio Henrique Martins Basilio 
 
 Illana Vitória Souza Rabelo
 
